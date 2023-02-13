@@ -7,3 +7,7 @@ spring:
     hibernate.ddl-auto: update
     generate-ddl: true
     show-sql: true
+
+stripe:
+  public:
+    key: sk_test_51K6qpfGedVQTFauHtmMtmTcYDbQNISQKaDrotn1BgE0mgP8nVKaaAQp9EGGzjfzvgFw4KE6xbSIhJMON80ERBAfD00KxRJk6Kf
