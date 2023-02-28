@@ -3,4 +3,4 @@
 * Added productEntity
 * Added productRepository
 * Added password column for customerEntity
-* Temporary Added Codes for productController and productService for basic fundamentals
+* Temporary Added Codes for productController and productService
