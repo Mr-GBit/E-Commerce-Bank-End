@@ -27,6 +27,8 @@ public class customerEntity {
     private String last_name;
     @Column (name = "email",nullable = false)
     private String email;
+    @Column (name = "password",nullable = false)
+    private String password;
     @Column (name = "birth_date")
     private LocalDate birth_date;
     @Column(name = "created_date_time")

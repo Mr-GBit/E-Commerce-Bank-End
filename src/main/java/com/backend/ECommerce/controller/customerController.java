@@ -16,6 +16,8 @@ public class customerController {
     public customerController(customerService customerService) {
         this.customerService = customerService;
     }
+
+    // Basic fundamentals of GET,POST,DELETE
     @GetMapping (path = "/getCustomer")
     public List<customerEntity> getCustomer(){
         return customerService.getCustomer();
@@ -28,4 +30,5 @@ public class customerController {
     public void deleteCustomer (@PathVariable ("customerId")BigInteger customerId){
         customerService.deleteCustomer(customerId);
     }
+
 }
