@@ -20,6 +20,17 @@ public class productService {
         return productRepository.findAll();
     }
     public Optional<productEntity> getProduct(BigInteger productId) {
-        return productRepository.findById(productId);
+        if(!productRepository.existsById(productId)){
+            throw new IllegalStateException("This " + productId + " Doesn't exit");
+        }
+       return productRepository.findById(productId);
+    }
+    public productEntity addProduct(productEntity product) {
+        Optional<productEntity> findbyProductName = productRepository.findByProductName(product.getProductName());
+        if(findbyProductName.isPresent()){
+            throw new IllegalStateException("This Product Name " + product.getProductName() + " is Taken");
+        }
+        productRepository.save(product);
+        return product;
     }
 }

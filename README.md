@@ -1,6 +1,6 @@
 # Update E-Commerce-Bank-End
-##### 02/28
-* Added productEntity
-* Added productRepository
-* Added password column for customerEntity
-* Temporary Added Codes for productController and productService for basic fundamentals
+##### 03/05
+* Added ResponseEntity each Controller
+* Added new dto folder for customerDTO and customerDTOMapper
+* Added Gender column for customerEntity
+* 

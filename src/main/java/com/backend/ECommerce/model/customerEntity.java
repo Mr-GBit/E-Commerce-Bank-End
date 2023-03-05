@@ -31,6 +31,8 @@ public class customerEntity {
     private String password;
     @Column (name = "birth_date")
     private LocalDate birth_date;
+    @Column (name = "Gender")
+    private String Gender;
     @Column(name = "created_date_time")
     @Temporal(TemporalType.TIMESTAMP)
     @CreationTimestamp
