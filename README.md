@@ -1,6 +1,5 @@
 # Update E-Commerce-Bank-End
-##### :pushpin: 02/28
-* Added productEntity
-* Added productRepository
-* Added password column for customerEntity
-* Temporary Added Codes for productController and productService
+##### :pushpin: 03/05
+* Added ResponseEntity Object of each Controller
+* Add dto folder for customerDTO and customerDTOMapper
+* Added Gender Column for customerEntity
