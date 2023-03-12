@@ -2,6 +2,7 @@ package com.backend.ECommerce.service;
 
 import com.backend.ECommerce.model.customerEntity;
 import com.backend.ECommerce.repository.customerRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,12 +11,9 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class customerService {
     private final customerRepository customerRepository;
-    @Autowired
-    public customerService(customerRepository customerRepository) {
-        this.customerRepository = customerRepository;
-    }
 
     public List<customerEntity> getAllCustomer() {
         return customerRepository.findAll();
@@ -43,5 +41,11 @@ public class customerService {
             throw new IllegalStateException("This Customer ID " + customerId + "Does not exist");
         }
         return customerRepository.findById(customerId);
+    }
+
+    public customerEntity updateCustomer(BigInteger customerId, customerEntity customerEntity) {
+        customerEntity customer = customerRepository.findById(customerId).orElseThrow(() -> new IllegalStateException("This customer Id" + customerId + "doest not exist"));
+        // Adding DTO
+        return customer;
     }
 }
