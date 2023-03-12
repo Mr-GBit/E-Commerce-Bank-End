@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Clob;
 
@@ -27,8 +28,10 @@ public class productEntity {
     private String size;
     @Column ( name = "quantity")
     private int quantity;
+    @Column ( name = "Category")
+    private String category;
     @Column (name = "price")
-    private Double price;
+    private BigDecimal price;
 //    @Column (name = "product_photo")
 //    private Clob productPhoto;
     @Column (name = "status")
