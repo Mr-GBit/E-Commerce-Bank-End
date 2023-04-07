@@ -38,9 +38,9 @@ public class productController{
     private ResponseEntity<productEntity> addNewProduct(@RequestBody productEntity productEntity , @RequestPart("photoImage")MultipartFile multipartFile){
         return new ResponseEntity<>(productService.addProduct(productEntity,multipartFile),HttpStatus.CREATED);
     }
-    @PutMapping(path = "{productId}")
-    private ResponseEntity<productEntity> updateProduct (@PathVariable ("productId") BigInteger productId, @RequestBody productEntity product){
-        return new ResponseEntity<>(productService.updateProduct(productId,product),HttpStatus.OK);
+    @PutMapping(path = "{productId}",consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    private ResponseEntity<productEntity> updateProduct (@PathVariable ("productId") BigInteger productId, @RequestBody productEntity product,@RequestPart("photoImage")MultipartFile multipartFile){
+        return new ResponseEntity<>(productService.updateProduct(productId,product,multipartFile),HttpStatus.OK);
     }
     @DeleteMapping(path = "{productId}")
     public ResponseEntity<BigInteger> deleteCustomer (@PathVariable ("productId")BigInteger productId){

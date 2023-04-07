@@ -48,8 +48,9 @@ public class productService {
         productRepository.save(product);
         return product;
     }
-    public productEntity updateProduct(BigInteger productId,productEntity productEntity) {
+    public productEntity updateProduct(BigInteger productId, productEntity productEntity, MultipartFile multipartFile) {
         productEntity product = productRepository.findById(productId).orElseThrow(()-> new IllegalStateException("This Product ID: " + productId + "Does not Exist"));
+        Blob blob;
         if(productEntity.getProductName() != null &&
                 productEntity.getProductName().length() > 0 &&
                 !Objects.equals(product.getProductName(),productEntity.getProductName())){
@@ -67,6 +68,16 @@ public class productService {
         if(productEntity.getQuantity() != 0 &&
                 !Objects.equals(product.getQuantity(),productEntity.getQuantity())){
             product.setQuantity(productEntity.getQuantity());
+        }
+        if(productEntity.getProductPhoto() !=null &&
+                !Objects.equals(product.getProductPhoto(),productEntity.getProductPhoto())){
+            try {
+                byte [] productFile = Base64.getEncoder().encode(multipartFile.getBytes());
+                blob = new SerialBlob(productFile);
+                product.setProductPhoto(blob);
+            } catch (Exception e) {
+                log.error(String.valueOf(e));
+            }
         }
         productRepository.save(product);
         return product;
