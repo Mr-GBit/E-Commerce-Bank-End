@@ -7,7 +7,7 @@ import lombok.ToString;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.sql.Clob;
+import java.sql.Blob;
 
 @Entity
 @Getter
@@ -32,8 +32,9 @@ public class productEntity {
     private String category;
     @Column (name = "price")
     private BigDecimal price;
-//    @Column (name = "product_photo")
-//    private Clob productPhoto;
+    @Column (name = "product_photo")
+    @Lob
+    private Blob productPhoto;
     @Column (name = "status")
     private String status;
 
