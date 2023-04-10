@@ -22,7 +22,7 @@ public class customerService {
     public customerEntity addCustomer(customerEntity customer) {
         Optional<customerEntity> findByEmail = customerRepository.findByEmail(customer.getEmail());
         if(findByEmail.isPresent()){
-            throw new NoSuchElementException("EMAIL TAKEN :(");
+            throw new IllegalArgumentException("This" + customer.getEmail() + " is already taken");
         }
         customerRepository.save(customer);
         return customer;

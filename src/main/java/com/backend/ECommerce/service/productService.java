@@ -30,7 +30,7 @@ public class productService {
     public productEntity addProduct(productEntity product, MultipartFile multipartFile) {
         Optional<productEntity> findByProductName = productRepository.findByProductName(product.getProductName());
         if(findByProductName.isPresent()){
-            throw new NoSuchElementException("This Product Name " + product.getProductName() + " is Taken");
+            throw new IllegalArgumentException("This Product Name " + product.getProductName() + " is Taken");
         }
         productPhoto(multipartFile);
         product.setProductCode(UUID.randomUUID().toString()); // generate UUID as Temp productCode
@@ -38,7 +38,8 @@ public class productService {
         return product;
     }
     public productEntity updateProduct(BigInteger productId, productEntity productEntity, MultipartFile multipartFile) {
-        productEntity product = productRepository.findById(productId).orElseThrow(()-> new NoSuchElementException("This Product ID: " + productId + "Does not Exist"));
+        productEntity product = productRepository.findById(productId)
+                .orElseThrow(()-> new NoSuchElementException("This Product ID: " + productId + "Does not Exist"));
         if(productEntity.getProductName() != null &&
                 productEntity.getProductName().length() > 0 &&
                 !Objects.equals(product.getProductName(),productEntity.getProductName())){
