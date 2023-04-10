@@ -10,11 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.sql.rowset.serial.SerialBlob;
 import java.math.BigInteger;
 import java.sql.Blob;
-import java.util.Base64;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -27,30 +23,22 @@ public class productService {
     }
     public Optional<productEntity> getProduct(BigInteger productId) {
         if(!productRepository.existsById(productId)){
-            throw new IllegalStateException("This " + productId + " Doesn't exit");
+            throw new NoSuchElementException("This " + productId + " Doesn't exit");
         }
        return productRepository.findById(productId);
     }
     public productEntity addProduct(productEntity product, MultipartFile multipartFile) {
         Optional<productEntity> findByProductName = productRepository.findByProductName(product.getProductName());
-        Blob blob;
         if(findByProductName.isPresent()){
-            throw new IllegalStateException("This Product Name " + product.getProductName() + " is Taken");
+            throw new NoSuchElementException("This Product Name " + product.getProductName() + " is Taken");
         }
-        try {
-            byte [] productFile = Base64.getEncoder().encode(multipartFile.getBytes());
-            blob = new SerialBlob(productFile);
-            product.setProductPhoto(blob);
-        } catch (Exception e) {
-            log.error(String.valueOf(e));
-        }
+        productPhoto(multipartFile);
         product.setProductCode(UUID.randomUUID().toString()); // generate UUID as Temp productCode
         productRepository.save(product);
         return product;
     }
     public productEntity updateProduct(BigInteger productId, productEntity productEntity, MultipartFile multipartFile) {
-        productEntity product = productRepository.findById(productId).orElseThrow(()-> new IllegalStateException("This Product ID: " + productId + "Does not Exist"));
-        Blob blob;
+        productEntity product = productRepository.findById(productId).orElseThrow(()-> new NoSuchElementException("This Product ID: " + productId + "Does not Exist"));
         if(productEntity.getProductName() != null &&
                 productEntity.getProductName().length() > 0 &&
                 !Objects.equals(product.getProductName(),productEntity.getProductName())){
@@ -71,20 +59,25 @@ public class productService {
         }
         if(productEntity.getProductPhoto() !=null &&
                 !Objects.equals(product.getProductPhoto(),productEntity.getProductPhoto())){
-            try {
-                byte [] productFile = Base64.getEncoder().encode(multipartFile.getBytes());
-                blob = new SerialBlob(productFile);
-                product.setProductPhoto(blob);
-            } catch (Exception e) {
-                log.error(String.valueOf(e));
-            }
+            productPhoto(multipartFile);
         }
         productRepository.save(product);
         return product;
     }
-    public BigInteger deleteProduct(BigInteger productId) {
+    public void productPhoto (MultipartFile file){
+        productEntity product;
+        product = new productEntity();
+        try {
+            byte [] productFile = Base64.getEncoder().encode(file.getBytes());
+            Blob blob = new SerialBlob(productFile);
+            product.setProductPhoto(blob);
+        }catch (Exception e){
+            log.error(String.valueOf(e));
+        }
+    }
+    public BigInteger deleteProduct(BigInteger productId){
         if(!productRepository.existsById(productId)){
-            throw new IllegalStateException("This Product ID " + productId + " does not exist");
+            throw new NoSuchElementException("This Product ID " + productId + " does not exist");
         }
         productRepository.deleteById(productId);
         return productId;
