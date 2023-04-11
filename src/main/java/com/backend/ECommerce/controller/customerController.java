@@ -3,7 +3,6 @@ package com.backend.ECommerce.controller;
 import com.backend.ECommerce.model.customerEntity;
 import com.backend.ECommerce.service.customerService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping(path = "/customer")
+@RequestMapping(path = "/api/v1/customer")
 @RequiredArgsConstructor
 public class customerController {
     private final customerService customerService;
